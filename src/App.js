@@ -1,6 +1,8 @@
-import React, { Component, Fragment } from 'react';
-import "./components/css/board.css";
+import React, { Component } from 'react';
+import "./components/css/reset.css";
+import Board from "./components/Board";
 import List from "./components/List";
+
 
 
 class App extends Component {
@@ -11,18 +13,11 @@ class App extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div className="content">
-          <div className="board--wrapper">
-            <div className="board">
-              <List></List>
-              <List></List>
-              <List></List>
-
-            </div>
-          </div>
-        </div>
-      </Fragment>
+      <Board>
+        <List></List>
+        <List></List>
+        <List></List>
+      </Board>
     )
   }
 

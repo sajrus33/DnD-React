@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import "./css/list.css"
+import "./css/list.css";
+import Card from "./Card";
+import Item from "./Item"
 
 class List extends Component {
 
@@ -10,13 +12,21 @@ class List extends Component {
                 <div className="list--wrapper">
                     <div className="list">
                         <div className="list__header">
-                            <h2 className="list__h"></h2>
+                            <div className="list__header--target"></div>
+                            <h2 className="list__h">Queue</h2>
                             <div className="list__wrapper--menu">
                                 <a href="/#" className="list__link--menu">
                                     <div className="list__ico--menu">...</div>
                                 </a>
                             </div>
                         </div>
+                        <Card>
+                            <Item></Item>
+                        </Card>
+                        <a href="/#" className="list__wrapper--create">
+                            <span className="list__span list__span--plus">+</span>
+                            <span className="list__span">Add another card</span>
+                        </a>
                     </div>
                 </div>
             </Fragment>

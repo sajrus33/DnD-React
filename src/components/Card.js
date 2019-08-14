@@ -7,7 +7,10 @@ class Card extends Component {
     render() {
         return (
             <Fragment>
+                <div className="card">
+                    {this.props.children}
 
+                </div>
             </Fragment>
         )
     }

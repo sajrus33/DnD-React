@@ -3,8 +3,6 @@ import "./components/css/reset.css";
 import Board from "./components/Board";
 import List from "./components/List";
 
-
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -12,7 +10,6 @@ class App extends Component {
       lists: [
         {
           txt: "List 1",
-          droppable: true,
           id: "l1",
           items: [
             {
@@ -27,7 +24,6 @@ class App extends Component {
         },
         {
           txt: "List 2",
-          droppable: true,
           id: "l2",
           items: [
             {
@@ -42,7 +38,6 @@ class App extends Component {
         },
         {
           txt: "List 3",
-          droppable: true,
           id: "l3",
           items: [
             {
@@ -52,6 +47,20 @@ class App extends Component {
             {
               txt: "item 6",
               id: "i6"
+            }
+          ]
+        },
+        {
+          txt: "List 4",
+          id: "l4",
+          items: [
+            {
+              txt: "item 7",
+              id: "i7"
+            },
+            {
+              txt: "item 8",
+              id: "i8"
             }
           ]
         },
@@ -90,15 +99,11 @@ class App extends Component {
           .forEach((item, iI) => {
             if (item.id == items[0].id || item.id == items[1].id) {
               indexs.push([iL, iI]);
-              console.log(indexs);
             }
           }))
       const i1 = indexs[0];
       const i2 = indexs[1];
-
       [lists[i1[0]].items[i1[1]], lists[i2[0]].items[i2[1]]] = [lists[i2[0]].items[i2[1]], lists[i1[0]].items[i1[1]]]
-
-      console.log(lists);
     }
     this.setState({
       lists: lists
@@ -121,7 +126,6 @@ class App extends Component {
       </Board>
     )
   }
-
 }
 
 export default App;

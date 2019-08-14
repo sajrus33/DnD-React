@@ -68,16 +68,18 @@
     float: left;
     padding: 6px;
     height: 20px;
-    width: 20px;
 
     font-size: 16px;
+    padding-right: 10px;
+
     text-decoration: none;
 }
 .list__ico--menu{
-                            /* ico */
+     /* ico */
     height: 16px;
     width: 16px;
     text-align: center;
+
 }
 
 /* footer -> add item */
@@ -92,7 +94,8 @@
 }
 .list__span{
     color: #6b778c;
+    padding-left: 5px;
 }
 .list__span--plus{
-                            /* ico */
+   /* ico */
 }

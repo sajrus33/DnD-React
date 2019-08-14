@@ -3,58 +3,41 @@ import "./css/list.css";
 import Card from "./Card";
 import Item from "./Item"
 
-class List extends Component {
-    constructor(props) {
-        super(props)
+import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/fontawesome-free/js/all.js';
 
-        this.state = {
-            items: []
-        }
-    }
+const List = props => {
 
-    componentDidMount() {
-
-    }
-
-    render() {
-        const items = this.props.items.map((item, i) => <Item dragStart={this.props.itemDragStart} txt={item.txt} key={i} id={item.id}></Item>)
-        return (
-            <div className="list--wrapper">
-                <div className="list"
-                    id={this.props.id}
-                    draggable={true}
-                    onDragOver={this.props.droppable ? this.props.listDragOver : null}
-                    onDrop={this.props.listDrop}
-                    onDragStart={this.props.listDragStart}
-                >
-                    <div className="list__header">
-                        <div className="list__header--target"></div>
-                        <h2 className="list__h">{this.props.txt}</h2>
-                        <div className="list__wrapper--menu">
-                            <a href="/#" className="list__link--menu">
-                                <div className="list__ico--menu">...</div>
-                            </a>
-                        </div>
+    const items = props.items.map((item, i) => <Item dragStart={props.itemDragStart} txt={item.txt} key={i} id={item.id}></Item>)
+    return (
+        <div className="list--wrapper">
+            <div className="list"
+                id={props.id}
+                draggable={true}
+                onDragOver={props.listDragOver}
+                onDrop={props.listDrop}
+                onDragStart={props.listDragStart}
+            >
+                <div className="list__header">
+                    <div className="list__header--target"></div>
+                    <h2 className="list__h">{props.txt}</h2>
+                    <div className="list__wrapper--menu">
+                        <a href="/#" className="list__link--menu">
+                            <div className="list__ico--menu"><i class="fas fa-ellipsis-h"></i></div>
+                        </a>
                     </div>
-                    <Card>
-                        {items}
-                    </Card>
-                    <a href="/#" className="list__wrapper--create">
-                        <span className="list__span list__span--plus">+</span>
-                        <span className="list__span">Add another card</span>
-                    </a>
                 </div>
+                <Card>
+                    {items}
+                </Card>
+                <a href="/#" className="list__wrapper--create">
+                    <span className="list__span list__span--plus"><i class="fas fa-plus"></i></span>
+                    <span className="list__span">Add another card</span>
+                </a>
             </div>
-        )
-    }
-
+        </div>
+    )
 }
 
+
 export default List;
-// .list--wrapper {
-// .list {
-// .list__header {
-// .list__h{
-// .list__wrapper--menu{
-// .list__link--menu{
-// .list__ico--menu{

@@ -15,8 +15,14 @@ class App extends Component {
           droppable: true,
           id: "l1",
           items: [
-            { txt: "item 1" },
-            { txt: "item 2" }
+            {
+              txt: "item 1",
+              id: "i1"
+            },
+            {
+              txt: "item 2",
+              id: "i2"
+            }
           ]
         },
         {
@@ -24,8 +30,14 @@ class App extends Component {
           droppable: true,
           id: "l2",
           items: [
-            { txt: "item 1" },
-            { txt: "item 2" }
+            {
+              txt: "item 3",
+              id: "i3"
+            },
+            {
+              txt: "item 4",
+              id: "i4"
+            }
           ]
         },
         {
@@ -33,8 +45,14 @@ class App extends Component {
           droppable: true,
           id: "l3",
           items: [
-            { txt: "item 1" },
-            { txt: "item 2" }
+            {
+              txt: "item 5",
+              id: "i5"
+            },
+            {
+              txt: "item 6",
+              id: "i6"
+            }
           ]
         },
       ],
@@ -54,15 +72,17 @@ class App extends Component {
 
   drop = e => {
     console.log("drop");
-    console.log(e.target.id);
+    const drop = e.target.id;
     const data = e.dataTransfer.getData("key");
-    console.log(data);
-    const newList = [...this.state.lists]
-    const lists = this.state.lists.filter(list => {
-      return list.id !== data
-    });
 
-    console.log(lists, this.state.lists);
+    let lists = [...this.state.lists];
+    const ele1 = lists.filter(list => list.id === data || list.id == drop);
+    const i1 = lists.indexOf(ele1[0]);
+    const i2 = lists.indexOf(ele1[1]);
+
+    [lists[i1], lists[i2]] = [lists[i2], lists[i1]];
+    console.log(lists);
+
     this.setState({
       lists: lists
     })
@@ -71,7 +91,7 @@ class App extends Component {
   render() {
     let lists = this.state.lists.map((list, i) =>
       <List
-        items={this.state.items}
+        items={list.items}
         listDragStart={this.dragStart.bind(this)}
         listDragOver={this.dragOver.bind(this)}
         droppable={list.droppable}

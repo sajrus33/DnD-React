@@ -17,11 +17,8 @@ class List extends Component {
     }
 
     render() {
-        let items = this.props.items;
-        if (items) {
-            console.log(items)
-            items = this.state.items.map((item, i) => <Item dragStart={this.props.itemDragStart} txt={item.txt} key={i} id={"item" + i}></Item>)
-        }
+        const items = this.props.items.map((item, i) => <Item dragStart={this.props.itemDragStart} txt={item.txt} key={i} id={item.id}></Item>)
+        console.log(items)
         return (
             <div className="list--wrapper">
                 <div className="list"

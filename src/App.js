@@ -12,65 +12,71 @@ class App extends Component {
       lists: [
         {
           txt: "List 1",
-          droppable: false
+          droppable: true,
+          id: "l1",
+          items: [
+            { txt: "item 1" },
+            { txt: "item 2" }
+          ]
         },
         {
           txt: "List 2",
-          droppable: true
+          droppable: true,
+          id: "l2",
+          items: [
+            { txt: "item 1" },
+            { txt: "item 2" }
+          ]
         },
         {
           txt: "List 3",
-          droppable: false
+          droppable: true,
+          id: "l3",
+          items: [
+            { txt: "item 1" },
+            { txt: "item 2" }
+          ]
         },
-      ]
+      ],
+
     }
-
-    this.lists = {
-      dragStart: e => {
-        console.log(e.target.id);
-        e.dataTransfer.allowEffect = 'move';
-      },
-
-      dragOver: e => {
-        e.preventDefault();
-      },
-
-      drop: e => {
-        console.log(e.target);
-        const data = e.dataTransfer.getData("key");
-        console.log(data)
-        document.querySelectorAll(`[data-key~="${data}"]`);
-      }
-    }
-
-    this.items = {
-      dragStart: e => {
-        console.log(e.target.id, "i am item");
-        e.dataTransfer.dropEffect = 'move';
-      },
-
-      dragOver: e => {
-        e.preventDefault();
-      },
-
-      drop: e => {
-        console.log(e.target);
-        const data = e.dataTransfer.getData("key");
-        console.log(data)
-        document.querySelectorAll(`[data-key~="${data}"]`);
-      }
-    }
-
+  }
+  dragStart = e => {
+    console.log("start drag");
+    console.log(e.target.id);
+    e.dataTransfer.setData("key", e.target.id)
   }
 
+  dragOver = e => {
+    console.log("drag over");
+    e.preventDefault();
+  }
+
+  drop = e => {
+    console.log("drop");
+    console.log(e.target.id);
+    const data = e.dataTransfer.getData("key");
+    console.log(data);
+    const newList = [...this.state.lists]
+    const lists = this.state.lists.filter(list => {
+      return list.id !== data
+    });
+
+    console.log(lists, this.state.lists);
+    this.setState({
+      lists: lists
+    })
+
+  }
   render() {
     let lists = this.state.lists.map((list, i) =>
       <List
-        listDragStart={this.lists.dragStart.bind(this)}
-        listDragOver={this.lists.dragOver.bind(this)}
+        items={this.state.items}
+        listDragStart={this.dragStart.bind(this)}
+        listDragOver={this.dragOver.bind(this)}
         droppable={list.droppable}
-        listDrop={this.lists.drop.bind(this)}
-        txt={list.txt} key={i} id={"list" + i} ></List>)
+        listDrop={this.drop.bind(this)}
+        txt={list.txt} key={i} id={list.id} ></List>)
 
     return (
       <Board>

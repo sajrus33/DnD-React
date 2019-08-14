@@ -8,16 +8,20 @@ class List extends Component {
         super(props)
 
         this.state = {
-            items: [
-                { txt: "item 1" },
-                { txt: "item 2" },
-                { txt: "item 3" }
-            ]
+            items: []
         }
     }
 
+    componentDidMount() {
+
+    }
+
     render() {
-        let items = this.state.items.map((item, i) => <Item dragStart={this.props.itemDragStart} txt={item.txt} key={i} id={"item" + i}></Item>)
+        let items = this.props.items;
+        if (items) {
+            console.log(items)
+            items = this.state.items.map((item, i) => <Item dragStart={this.props.itemDragStart} txt={item.txt} key={i} id={"item" + i}></Item>)
+        }
         return (
             <div className="list--wrapper">
                 <div className="list"

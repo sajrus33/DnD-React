@@ -1,17 +1,18 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import "./css/item.css"
 
 class Item extends Component {
-
-
     render() {
         return (
-            <Fragment>
-                <a href="/#" className="item">I am item</a>
-            </Fragment>
+            <a
+                draggable={true}
+                href="/#" className="item">{this.props.txt}
+            </a>
         )
     }
 
 }
-
+Item.defaultProps = {
+    txt: "Default text"
+};
 export default Item;

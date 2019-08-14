@@ -15,7 +15,7 @@
     right: 0;
     bottom: 0;
     left: 0;
-    margin: 20px 4px 0px 4px;
+    padding: 20px 4px 0px 4px;
 
 }
 .board::-webkit-scrollbar {

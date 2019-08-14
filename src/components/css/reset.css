@@ -1,3 +1,6 @@
 *{
     box-sizing: border-box;
 }
+[draggable]{
+    user-select: none;
+}

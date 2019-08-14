@@ -9,7 +9,6 @@ class Card extends Component {
             <Fragment>
                 <div className="card">
                     {this.props.children}
-
                 </div>
             </Fragment>
         )

@@ -60,29 +60,46 @@ class App extends Component {
     }
   }
   dragStart = e => {
-    console.log("start drag");
-    console.log(e.target.id);
     e.dataTransfer.setData("key", e.target.id)
   }
 
   dragOver = e => {
-    console.log("drag over");
     e.preventDefault();
   }
 
   drop = e => {
-    console.log("drop");
     const drop = e.target.id;
     const data = e.dataTransfer.getData("key");
 
     let lists = [...this.state.lists];
-    const ele1 = lists.filter(list => list.id === data || list.id == drop);
-    const i1 = lists.indexOf(ele1[0]);
-    const i2 = lists.indexOf(ele1[1]);
 
-    [lists[i1], lists[i2]] = [lists[i2], lists[i1]];
-    console.log(lists);
+    if (data.slice(0, 1) === "l" && drop.slice(0, 1) == "l") {
+      const indexs = lists.filter(list => list.id === data || list.id == drop);
+      const i1 = lists.indexOf(indexs[0]);
+      const i2 = lists.indexOf(indexs[1]);
+      [lists[i1], lists[i2]] = [lists[i2], lists[i1]];
 
+    } else if (data.slice(0, 1) === "i" && drop.slice(0, 1) == "i") {
+      const items = lists
+        .map(list => list.items)
+        .flat()
+        .filter(item => item.id === data || item.id == drop);
+      const indexs = [];
+      lists
+        .forEach((list, iL) => list.items
+          .forEach((item, iI) => {
+            if (item.id == items[0].id || item.id == items[1].id) {
+              indexs.push([iL, iI]);
+              console.log(indexs);
+            }
+          }))
+      const i1 = indexs[0];
+      const i2 = indexs[1];
+
+      [lists[i1[0]].items[i1[1]], lists[i2[0]].items[i2[1]]] = [lists[i2[0]].items[i2[1]], lists[i1[0]].items[i1[1]]]
+
+      console.log(lists);
+    }
     this.setState({
       lists: lists
     })

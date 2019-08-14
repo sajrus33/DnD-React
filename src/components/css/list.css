@@ -17,8 +17,11 @@
     max-height: 100%;
     position: relative;
     white-space: normal;
+    cursor: pointer;
 }
-
+.list *{
+    pointer-events: none;
+}
 
 /* header */
 .list__header {

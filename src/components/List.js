@@ -17,22 +17,17 @@ class List extends Component {
     }
 
     render() {
-        let items = this.state.items.map((item, i) => <Item txt={item.txt} key={i}></Item>)
+        let items = this.state.items.map((item, i) => <Item dragStart={this.props.itemDragStart} txt={item.txt} key={i} id={"item" + i}></Item>)
         return (
             <div className="list--wrapper">
                 <div className="list"
-                    onDragOver={this.props.listDragOver}
+                    id={this.props.id}
+                    draggable={true}
+                    onDragOver={this.props.droppable ? this.props.listDragOver : null}
                     onDrop={this.props.listDrop}
                     onDragStart={this.props.listDragStart}
                 >
-                    <div
-                        draggable={true}
-
-                        onDragStart={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                        }}
-                        className="list__header">
+                    <div className="list__header">
                         <div className="list__header--target"></div>
                         <h2 className="list__h">{this.props.txt}</h2>
                         <div className="list__wrapper--menu">

@@ -10,39 +10,68 @@ class App extends Component {
     super(props)
     this.state = {
       lists: [
-        { txt: "List 1" },
-        { txt: "List 2" },
-        { txt: "List 3" },
+        {
+          txt: "List 1",
+          droppable: false
+        },
+        {
+          txt: "List 2",
+          droppable: true
+        },
+        {
+          txt: "List 3",
+          droppable: false
+        },
       ]
     }
 
-    this.list = {
+    this.lists = {
       dragStart: e => {
-        e.stopPropagation();
-        console.log(e.target)
+        console.log(e.target.id);
+        e.dataTransfer.allowEffect = 'move';
       },
+
       dragOver: e => {
         e.preventDefault();
-
-        e.dataTransfer.setData("text", e.target.id);
-        e.dataTransfer.dropEffect = 'move';
-        // console.log(e.target)
       },
+
       drop: e => {
-        console.log(e.target)
+        console.log(e.target);
+        const data = e.dataTransfer.getData("key");
+        console.log(data)
+        document.querySelectorAll(`[data-key~="${data}"]`);
       }
     }
 
+    this.items = {
+      dragStart: e => {
+        console.log(e.target.id, "i am item");
+        e.dataTransfer.dropEffect = 'move';
+      },
+
+      dragOver: e => {
+        e.preventDefault();
+      },
+
+      drop: e => {
+        console.log(e.target);
+        const data = e.dataTransfer.getData("key");
+        console.log(data)
+        document.querySelectorAll(`[data-key~="${data}"]`);
+      }
+    }
 
   }
 
   render() {
-    let lists = this.state.lists.map((list, i) => <List
-      listDragStart={this.list.dragStart.bind(this)}
-      listDragOver={this.list.dragOver.bind(this)}
-      listDrop={this.list.drop.bind(this)}
+    let lists = this.state.lists.map((list, i) =>
+      <List
+        listDragStart={this.lists.dragStart.bind(this)}
+        listDragOver={this.lists.dragOver.bind(this)}
+        droppable={list.droppable}
+        listDrop={this.lists.drop.bind(this)}
+        txt={list.txt} key={i} id={"list" + i} ></List>)
 
-      txt={list.txt} key={i} id={i} ></List>)
     return (
       <Board>
         {lists}

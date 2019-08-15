@@ -65,11 +65,13 @@ class App extends Component {
           ]
         },
       ],
-
     }
+    this.draggedId = null;
+
   }
+
   dragStart = e => {
-    e.dataTransfer.setData("key", e.target.id)
+    this.draggedId = e.target.id
   }
 
   dragOver = e => {
@@ -77,48 +79,57 @@ class App extends Component {
   }
 
   drop = e => {
-    const drop = e.target.id;
-    const data = e.dataTransfer.getData("key");
+    const dropId = e.target.id;
+    const dragId = this.draggedId;
 
-    let lists = [...this.state.lists];
+    if (dropId !== dragId) {
+      const [dragPrefixId,] = dragId;
+      const [dropPrefixId,] = dropId;
 
-    if (data.slice(0, 1) === "l" && drop.slice(0, 1) == "l") {
-      const indexs = lists.filter(list => list.id === data || list.id == drop);
-      const i1 = lists.indexOf(indexs[0]);
-      const i2 = lists.indexOf(indexs[1]);
-      [lists[i1], lists[i2]] = [lists[i2], lists[i1]];
+      if (dragPrefixId === dropPrefixId) {
+        const lists = [...this.state.lists];
 
-    } else if (data.slice(0, 1) === "i" && drop.slice(0, 1) == "i") {
-      const items = lists
-        .map(list => list.items)
-        .flat()
-        .filter(item => item.id === data || item.id == drop);
-      const indexs = [];
-      lists
-        .forEach((list, iL) => list.items
-          .forEach((item, iI) => {
-            if (item.id == items[0].id || item.id == items[1].id) {
-              indexs.push([iL, iI]);
-            }
-          }))
-      const i1 = indexs[0];
-      const i2 = indexs[1];
-      [lists[i1[0]].items[i1[1]], lists[i2[0]].items[i2[1]]] = [lists[i2[0]].items[i2[1]], lists[i1[0]].items[i1[1]]]
+        if (dragPrefixId === "l") {
+          const indexes = lists.filter(list => list.id === dragId || list.id === dropId);
+          const i1 = lists.indexOf(indexes[0]);
+          const i2 = lists.indexOf(indexes[1]);
+          lists.splice(i2, 1, lists.splice(i1, 1, lists[i2])[0]);
+
+        } else if (dragPrefixId === "i") {
+          const items = lists
+            .map(list => list.items)
+            .flat()
+            .filter(item => item.id === dragId || item.id === dropId);
+
+          const indexes = [];
+          lists.forEach((list, iL) =>
+            list.items.forEach((item, iI) => {
+              if (item.id === items[0].id || item.id === items[1].id) {
+                indexes.push([iL, iI]);
+              }
+            }))
+          const [[iL1, iI1], [iL2, iI2]] = indexes;
+
+          lists[iL1].items.splice(iI1, 1, lists[iL2].items.splice(iI2, 1, lists[iL1].items[iI1])[0]);
+        }
+
+        this.setState({
+          lists: lists
+        })
+      }
+
     }
-    this.setState({
-      lists: lists
-    })
-
   }
   render() {
     let lists = this.state.lists.map((list, i) =>
-      <List
+      (<List
         items={list.items}
         listDragStart={this.dragStart.bind(this)}
         listDragOver={this.dragOver.bind(this)}
         droppable={list.droppable}
         listDrop={this.drop.bind(this)}
-        txt={list.txt} key={i} id={list.id} ></List>)
+        txt={list.txt} key={i} id={list.id} >
+      </List>))
 
     return (
       <Board>

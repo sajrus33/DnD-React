@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./css/list.css";
 import Card from "./Card";
 import Item from "./Item"
@@ -23,7 +23,7 @@ const List = props => {
                     <h2 className="list__h">{props.txt}</h2>
                     <div className="list__wrapper--menu">
                         <a href="/#" className="list__link--menu">
-                            <div className="list__ico--menu"><i class="fas fa-ellipsis-h"></i></div>
+                            <div className="list__ico--menu"><i className="fas fa-ellipsis-h"></i></div>
                         </a>
                     </div>
                 </div>
@@ -31,7 +31,7 @@ const List = props => {
                     {items}
                 </Card>
                 <a href="/#" className="list__wrapper--create">
-                    <span className="list__span list__span--plus"><i class="fas fa-plus"></i></span>
+                    <span className="list__span list__span--plus"><i className="fas fa-plus"></i></span>
                     <span className="list__span">Add another card</span>
                 </a>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import "./css/list.css";
-import Card from "./Card";
+import "./css/card.css"
+
 import Item from "./Item"
 
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -27,9 +28,9 @@ const List = props => {
                         </a>
                     </div>
                 </div>
-                <Card>
+                <div className="card">
                     {items}
-                </Card>
+                </div>
                 <a href="/#" className="list__wrapper--create">
                     <span className="list__span list__span--plus"><i className="fas fa-plus"></i></span>
                     <span className="list__span">Add another card</span>

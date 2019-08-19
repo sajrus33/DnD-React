@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./components/css/reset.css";
-import Board from "./components/Board";
+import "./components/css/board.css";
+
 import List from "./components/List";
 
 class App extends Component {
@@ -91,13 +92,11 @@ class App extends Component {
         const lists = [...this.state.lists];
 
         if (dragPrefixId === "l") {
-          let [i1, i2] = lists.filter(
-            list => list.id === dragId || list.id === dropId
-          );
-          i1 = lists.indexOf(i1);
-          i2 = lists.indexOf(i2);
+          const dragListIndex = lists.findIndex((list) => list.id === dragId);
+          const dropListIndex = lists.findIndex((list) => list.id === dropId);
 
-          lists.splice(i2, 1, lists.splice(i1, 1, lists[i2])[0]);
+          lists.splice(dragListIndex, 1, lists.splice(dropListIndex, 1, lists[dragListIndex])[0]);
+
         } else if (dragPrefixId === "i") {
           const [item1, item2] = lists
             .map(list => list.items)
@@ -105,19 +104,19 @@ class App extends Component {
             .filter(item => item.id === dragId || item.id === dropId);
 
           const indexes = [];
-          lists.forEach((list, iL) =>
-            list.items.forEach((item, iI) => {
+          lists.forEach((list, listIndex) =>
+            list.items.forEach((item, itemIndex) => {
               if (item.id === item1.id || item.id === item2.id) {
-                indexes.push([iL, iI]);
+                indexes.push([listIndex, itemIndex]);
               }
             })
           );
-          const [[iL1, iI1], [iL2, iI2]] = indexes;
+          const [[list1Index, item1Index], [list2Index, item2Index]] = indexes;
 
-          lists[iL1].items.splice(
-            iI1,
+          lists[list1Index].items.splice(
+            item1Index,
             1,
-            lists[iL2].items.splice(iI2, 1, lists[iL1].items[iI1])[0]
+            lists[list2Index].items.splice(item2Index, 1, lists[list1Index].items[item1Index])[0]
           );
         }
 
@@ -127,21 +126,32 @@ class App extends Component {
       }
     }
   };
-  render() {
-    let lists = this.state.lists.map((list, i) => (
-      <List
-        items={list.items}
-        listDragStart={this.dragStart.bind(this)}
-        listDragOver={this.dragOver.bind(this)}
-        droppable={list.droppable}
-        listDrop={this.drop.bind(this)}
-        txt={list.txt}
-        key={i}
-        id={list.id}
-      />
-    ));
 
-    return <Board>{lists}</Board>;
+
+  render() {
+
+
+
+    return (
+      <div className="board--wrapper">
+        <div className="board">
+          {
+            this.state.lists.map((list, i) => (
+              <List
+                items={list.items}
+                listDragStart={this.dragStart.bind(this)}
+                listDragOver={this.dragOver.bind(this)}
+                droppable={list.droppable}
+                listDrop={this.drop.bind(this)}
+                txt={list.txt}
+                key={i}
+                id={list.id}
+              />
+            ))
+          }
+        </div>
+      </div>
+    )
   }
 }
 
